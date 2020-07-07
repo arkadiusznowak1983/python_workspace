@@ -24,7 +24,7 @@ class BinaryExponentiation:
     def calc_linear(self):
         '''
         time complexity is O(log(n)) and the linear algorithm is better solution
-        :return: base multiplication by exp in recursive mode
+        :return: base multiplication by exp in linear mode (fastest way)
         '''
         result = 1
         while(self.exp):
