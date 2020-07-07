@@ -1,4 +1,8 @@
 class BinaryExponentiation:
+    '''
+    binary exponentiation: recursive vs linear solution
+    '''
+    
     def __init__(self, base=1, exp=2):
         self.base = 1 if base is None else base
         self.exp = 2 if exp is None else exp
