@@ -1,4 +1,8 @@
 class BinaryExponentiation:
+    '''
+    binary exponentiation: recursive vs linear solution
+    '''
+    
     def __init__(self, base=1, exp=2):
         self.base = 1 if base is None else base
         self.exp = 2 if exp is None else exp
@@ -24,7 +28,7 @@ class BinaryExponentiation:
     def calc_linear(self):
         '''
         time complexity is O(log(n)) and the linear algorithm is better solution
-        :return: base multiplication by exp in recursive mode
+        :return: base multiplication by exp in linear mode (fastest way)
         '''
         result = 1
         while(self.exp):
