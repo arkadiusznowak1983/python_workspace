@@ -37,3 +37,4 @@ class BinaryExponentiation:
             self.base = self.base * self.base
             self.exp = int(self.exp / 2)
         return result
+
