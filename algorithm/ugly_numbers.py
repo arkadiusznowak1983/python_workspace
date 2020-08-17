@@ -39,8 +39,10 @@ class UglyNumbers:
     #     uglyNumbers.sort()
     #     return uglyNumbers[n-1]
 
-    def ugly_numbers_recurent(self, n):
+    def ugly_numbers_simple(self, n):
         '''
+        time complexity: O(nlog(n)) ???
+        space complexity: O(1)
         To check
             if a number is ugly,
                 divide the number by greatest divisible powers of 2, 3 and 5,
@@ -65,3 +67,32 @@ class UglyNumbers:
             while(n % number == 0):
                 n = int(n/number)
         return 1 if n == 1 else 0
+
+    def ugly_numbers_dynamic(self, n):
+        '''
+        dynamic method
+        time complexity: O(n)
+        space complexity: O(n)
+        '''
+        uglyNumbers = [0] * n
+        uglyNumbers[0] = 1
+        primary2 = primary3 = primary5 = 0
+        nextMultiplePrimary2 = 2
+        nextMultiplePrimary3 = 3
+        nextMultiplePrimary5 = 5
+
+        for indeks in range(1, len(uglyNumbers)):
+            uglyNumbers[indeks] = min( nextMultiplePrimary2
+                                      ,nextMultiplePrimary3
+                                      ,nextMultiplePrimary5)
+            if (uglyNumbers[indeks] == nextMultiplePrimary2):
+                    primary2 = primary2 + 1
+                    nextMultiplePrimary2 = uglyNumbers[primary2] * 2
+            if (uglyNumbers[indeks] == nextMultiplePrimary3):
+                    primary3 = primary3 + 1
+                    nextMultiplePrimary3 = uglyNumbers[primary3] * 3
+            if (uglyNumbers[indeks] == nextMultiplePrimary5):
+                    primary5 = primary5 + 1
+                    nextMultiplePrimary5 = uglyNumbers[primary5] * 5
+
+        return uglyNumbers[-1]
