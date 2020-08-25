@@ -1,3 +1,5 @@
+from print_as_log_writter import print
+
 class JosephusProblem:
     '''
     https://www.geeksforgeeks.org/josephus-problem-set-1-a-on-solution/
@@ -14,8 +16,15 @@ class JosephusProblem:
         O(n)
         '''
         if n == 1:
+            print("n={}, return => {}".format(n, 1))
             return 1
-        return (self.safe(n - 1, k) + k - 1) % n + 1
+        safe = self.safe(n - 1, k)
+        print("n={}, safe = {}, diff = {}, modulo = {}, result => ".format( n
+                                                                           ,safe
+                                                                           ,safe + k - 1
+                                                                           , (safe + k - 1) % n)
+                                                                           ,((safe + k - 1) % n + 1) )
+        return (safe + k - 1) % n + 1
 
     def linear(self, n, k):
         '''
@@ -45,3 +54,14 @@ class JosephusProblem:
             return res + n
         else:
             return res + int(res / (k - 1))
+
+    def circle(self, n, k):
+        pass
+        arr = [i for i in range(n)]
+        position = 0
+        while len(arr) > 1:
+            position = (position + k - 1) % len(arr)
+            if position + 1 >= len(arr):
+                position = position % len(arr)
+            arr.remove(position)
+        return arr[0] + 1
