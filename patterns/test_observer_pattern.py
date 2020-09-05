@@ -1,9 +1,15 @@
 import unittest
-from observer_pattern import Observer, ObserverNameException, Publisher
+from observer_pattern import Observer, ObserverNameException, Publisher, UpdateException
 
 class ObserverTestCase(unittest.TestCase):
     def test_Observer_ExceptionName(self):
-        with self.assertRaises(ObserverNameException): Observer()
+        try:
+            Observer()
+        except ObserverNameException:
+            return
+        except:
+            pass
+        self.fail('ObserverNameException not apperas')
 
     def test_Observer_NotExceptionName(self):
         try:
