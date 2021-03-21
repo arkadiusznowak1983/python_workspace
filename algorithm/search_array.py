@@ -1,3 +1,59 @@
+class SearchArrayNode:
+    def __init__(self):
+        self.character = None
+        self.nodes = []
+
+    def insert_word(self, word, index):
+        # validate & set current node letter
+        if index >= len(word):
+            return None
+        if self.character is None:
+            self.character = word[index]
+
+        # validate next letter
+        if len(word) <= index+1:
+            return self
+
+        # use or create node for letter
+        sub_node = None
+        if len(self.nodes):
+            for node in self.nodes:
+                if node.character == word[index+1]:
+                    sub_node = node.insert_word(word, index+1)
+                    break
+        if sub_node is None:
+            sub_node = SearchArrayNode().insert_word(word, index+1)
+        if not sub_node is None:
+            self.nodes.append(sub_node)
+
+        return self
+
+    def compile(self, elements=[]):
+        for word in elements:
+            node = None
+            if not len(self.nodes):
+                node = SearchArrayNode()
+            else:
+                for node in self.nodes:
+                    if node.character == word[0]:
+                        break
+            self.nodes.append(node)
+            node.insert_word(word, 0)
+
+    def search(self, word, node=None):
+        matches = []
+        matches.append( node if not node is None else self )
+        if len(self.nodes):
+            for node in self.nodes:
+                if node.character == word[0]:
+                    matches.append( self.search(word[1:], node) )
+        return matches
+
+    # FINISH printing paths !!!!
+    def show(self, nodes):
+        print(nodes)
+        pass
+
 class SearchArray:
     """ Class contains solutions for different search alghoritms """
     type = None
@@ -16,6 +72,8 @@ class SearchArray:
             return self.linear(array, element)
         elif self.type == 'binary':
             return self.binary(array, element)
+        elif self.type == 'like_bintree':
+            return self.like_bintree(array, element)
         else:
             raise Exception('specify correct alghoritm: linear, binary, ...')
 
@@ -53,3 +111,8 @@ class SearchArray:
             else:
                 return middlePos
         return -1
+
+    def like_bintree(self, elements, word):
+        treeObject = SearchArrayNode()
+        treeObject.compile(elements)
+        treeObject.show(treeObject.search("lor"))

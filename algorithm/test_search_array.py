@@ -18,7 +18,10 @@ class SearchArrayTestCase(unittest.TestCase):
         self.assertEqual((SearchArray('binary')).search([1, 2, 2, 3, 3, 5, 6, 23, 55, 64, 74, 435], 4 ), -1 )
         self.assertEqual((SearchArray('binary')).search([1, 2, 2, 3, 3, 5, 6, 23, 55, 64, 74, 435], 34 ), -1 )
 
+    def test_like_bintree(self):
+        # self.assertEqual( (SearchArray('like_bintree')).search(["lorem", "ipsum", "lora", "ipsa", "dora", "lorum", "lorsum"], "lor" ).sort(), ["lorem", "lora", "lorum", "lorsum"].sort() )
+        self.assertEqual( (SearchArray('like_bintree')).search(["lorem", "ipsum", "lora", "ipsa", "dora", "lorum", "lorsum"], "lor" ), ["lorem", "lora", "lorum", "lorsum"] )
+
 if __name__ == '__main__':
     suite = unittest.TestLoader().loadTestsFromTestCase(SearchArrayTestCase)
-    #suite = unittest.TestLoader().loadTestsFromName( 'test_binary', SearchArrayTestCase )
     unittest.TextTestRunner(verbosity=2).run(suite)
