@@ -1,13 +1,19 @@
 class Position:
     x: int
     y: int
+    column_map = {'A': 1, 'B': 2, 'C': 3, 'D': 4, 'E': 5, 'F': 6, 'G': 7, 'H': 8}
 
-    def __init__(self, x: int, y: int):
-         self.x = x
-         self.y = y
+    def __init__(self, x, y: int = None):
+        if isinstance(x, str):
+            self.x = Position.column_map[x[0]]
+            self.y = int(x[1])
+        else:
+            self.x = x
+            self.y = y
 
     def show(self):
-        return f"{self.x}, {self.y}"
+        reverse_column_map = dict((v, k) for k, v in Position.column_map.items())
+        return f"{reverse_column_map[self.x]}{self.y}"
 
 
 class Knight:
@@ -69,11 +75,10 @@ class Knight:
 
     @staticmethod
     def get_shortest_path(position: Position):
-        return Knight.table.get(position.show(), False)
+        return Knight.table.get(position.show(), []) + [position.show()]
 
 
 if __name__ == '__main__':
-    column_map = {'A': 1, 'B': 2, 'C': 3, 'D': 4, 'E': 5, 'F': 6, 'G': 7, 'H': 8}
-    Knight(Position(column_map['B'], 1))
-    print(f"Shortest path from B1 to E8 is {Knight.get_shortest_path(Position(column_map['E'], 8))}")
-    print(f"Total number of possible paths is {Knight.complexity}")
+    start, finish = 'B1', 'E8'
+    print(f"Shortest path from {start} to {finish} is {Knight(Position(start)).get_shortest_path(Position(finish))}")
+    print(f"[debug]Total number of possible paths is {Knight.complexity}")
