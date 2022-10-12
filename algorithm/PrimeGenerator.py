@@ -20,7 +20,12 @@ class Primes:
                 yield new
 
 
-# first 17 primes
 assert [v for v in Primes(17).get()].__eq__([2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59]), "Wrong for Pi(17)"
-
 assert max(Primes(999).get()) == 7907, "Wrong 999 prime"
+
+try:
+    len(Primes(999).get())
+except TypeError:
+    pass
+else:
+    raise AssertionError("Generator should raise exception TypeError: object of type 'generator' has no len()")
