@@ -1,4 +1,4 @@
-class Pi:
+class Primes:
     def __init__(self, n: int, greater: int = 1):
         self.__n = n
         self.__greater = greater
@@ -34,9 +34,9 @@ class Pi:
 
 
 # first 17 primes
-assert [v for v in Pi(17)].__eq__([2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59]), "Wrong for Pi(17)"
+assert [v for v in Primes(17)].__eq__([2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59]), "Wrong for Pi(17)"
 
 # first 17 primes greater than 10
-assert [v for v in Pi(17, 10)].__eq__([11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59]), "Wrong for Pi(17, 10)"
+assert [v for v in Primes(17, 10)].__eq__([11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59]), "Wrong for Pi(17, 10)"
 
-assert max(Pi(999)) == 7907, "Wrong 999 prime"
+assert max(Primes(999)) == 7907, "Wrong 999 prime"
