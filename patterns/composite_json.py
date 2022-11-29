@@ -6,7 +6,7 @@ class Json:
         self.entity = entity
 
     def __str__(self):
-        return f"{str(self.entity)}"
+        return f"{{{str(self.entity)}}}"
 
 
 class KeyValue:
@@ -15,7 +15,7 @@ class KeyValue:
         self.value = value
 
     def __str__(self):
-        return f"{{'{str(self.key)}': {str(self.value)}}}"
+        return f"'{str(self.key)}': {str(self.value)}"
 
 
 class Element:
