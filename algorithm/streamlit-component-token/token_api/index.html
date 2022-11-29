@@ -1,0 +1,75 @@
+<html>
+<head></head>
+<body>
+  <input type="text" id="token_api">
+</body>
+
+<script type="text/javascript">
+  const SET_COMPONENT_VALUE = "streamlit:setComponentValue"
+  const RENDER = "streamlit:render"
+  const COMPONENT_READY = "streamlit:componentReady"
+  const SET_FRAME_HEIGHT = "streamlit:setFrameHeight"
+
+  function _sendMessage(type, data) {
+    // copy data into object
+    var outboundData = Object.assign({
+      isStreamlitMessage: true,
+      type: type,
+    }, data)
+
+    if (type == SET_COMPONENT_VALUE) {
+      console.log("_sendMessage data: " + JSON.stringify(data))
+      console.log("_sendMessage outboundData: " + JSON.stringify(outboundData))
+    }
+
+    window.parent.postMessage(outboundData, "*")
+  }
+
+  function setFrameHeight(height) {
+    _sendMessage(SET_FRAME_HEIGHT, { height: height })
+  }
+
+  function token_upd() {
+    console.log('Location hash')
+    console.log(window.parent.document.location.hash)
+    console.log('bbbbb')
+    document.getElementById('token_api').value = 'wwwwwww' + window.parent.document.location.hash
+    _sendMessage(SET_COMPONENT_VALUE, {
+      value: document.getElementById('token_api').value,
+      dataType: "json",
+    })
+  }
+
+  function initialize(pipeline) {
+    _sendMessage(COMPONENT_READY, { apiVersion: 1 });
+    token_upd()
+    window.addEventListener("load", () => {
+      window.setTimeout(function () {
+        setFrameHeight(document.documentElement.clientHeight)
+      }, 0)
+
+
+    })
+
+    _sendMessage(SET_FRAME_HEIGHT, { height: 200 })
+  }
+
+  function initializeProps_Handler(props) {
+    console.log('init')
+  }
+
+  function dataUpdate_Handler(props) {
+    let token = document.getElementById("token_api")
+    token.value = props.value
+  }
+
+  function log_Handler(props) {
+    console.log("Received from Streamlit: " + JSON.stringify(props))
+  }
+
+  let pipeline = [initializeProps_Handler, dataUpdate_Handler, log_Handler]
+  initialize(pipeline)
+
+</script>
+
+</html>
