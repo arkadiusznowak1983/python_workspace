@@ -1,0 +1,37 @@
+# create fastapi endpoint with name startrun
+# authorize endpoint connection if header key 'iem-key' exists
+# validate JWT token from header 'item-key' with JWKS service at url https://myservice.pl/jwks.json
+
+from fastapi import FastAPI
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+from fastapi.responses import JSONResponse
+from jose import jwt
+import requests
+
+app = FastAPI()
+
+@app.get("/startrun")
+def start_run(authorization: HTTPAuthorizationCredentials = HTTPBearer()):
+    if authorization.scheme == 'Bearer':
+        jwks_url = "https://myservice.pl/jwks.json"
+        token = authorization.credentials
+        unverified_header = jwt.get_unverified_header(token)
+
+        r = requests.get(jwks_url)
+        jwks = r.json()
+        public_key = ''
+
+        for key in jwks["keys"]:
+            if key["kid"] == unverified_header["kid"]:
+                public_key = jwt.algorithms.RSAAlgorithm.from_jwk(json.dumps(key))
+
+        if public_key != '':
+            try:
+                payload = jwt.decode(token, public_key, algorithms='RS256', audience="test")
+                return JSONResponse(status_code=200, content={"message": "token is valid"})
+            except Exception as e:
+                return JSONResponse(status_code=401, content={"message": "token is invalid"})
+        else:
+            return JSONResponse(status_code=400, content={"message": "public key not found"})
+    else:
+        return JSONResponse(status_code=400, content={"message": "invalid authorization type"})

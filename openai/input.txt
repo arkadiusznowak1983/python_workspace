@@ -1,0 +1,5 @@
+# create fastapi endpoint with name startrun
+# authorize endpoint connection if header key 'iem-key' exists
+# if 'iem-key' exists then validate JWT token from header 'item-key' with JWKS service at url https://myservice.pl/jwks.json
+# if 'iem-key' not exists in header then create new JWT token and add this token to JWKS service at url https://myservice.pl/jwks.json
+# cache request to JWKS service
